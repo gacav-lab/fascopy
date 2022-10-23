@@ -63,7 +63,7 @@ log() {
 
 checks_needed_programs() {
 	# "Zenity" is the most universal dialog program, it comes pre-installed on ALMOST all distributions
-	# "Zip" is the most universal dialog program, it comes pre-installed on ALMOST all distributions
+	# "Zip" is the most universal compression program, it comes pre-installed on ALMOST all distributions
 
 	message='Verificando programas...'
 	display_message 'notification' "$message"
