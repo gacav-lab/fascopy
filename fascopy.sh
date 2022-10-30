@@ -132,7 +132,7 @@ create_dirs() {
 	if [ ! -e "$LOG_PATH" ]; then
 		mkdir -p "$LOG_PATH"
 
-		message="Directory \""$LOG_DIR_NAME"/"$SCRIPT_NAME"\" created."
+		message="The directory \""$LOG_DIR_NAME"/"$SCRIPT_NAME"\" was created."
 		display_message 'notification' "$message"
 
 		log 'info' "$message"
@@ -141,7 +141,7 @@ create_dirs() {
 	if [ ! -d "$BKP_PATH" ]; then
 		mkdir "$BKP_PATH"
 
-		message="Directory \""$BKP_DIR_NAME"\" created."
+		message="The directory \""$BKP_DIR_NAME"\" was created."
 		display_message 'notification' "$message"
 
 		log 'info' "$message"
