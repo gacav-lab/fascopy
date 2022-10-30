@@ -165,14 +165,14 @@ backup() {
 	local readonly DIR_NAMES=(.ssh .config Documentos Downloads Imagens Modelos Música laboratory Vídeos Público)
 
 	for file_name in ${FILE_NAMES[@]}; do
-		FILES_PATH[$i]=$HOME/"$file_name"
-		FILES_BKP_PATH[$((i++))]="$BKP_PATH"/"$file_name"
+		FILES_PATH[i]=$HOME/"$file_name"
+		FILES_BKP_PATH[i++]="$BKP_PATH"/"$file_name"
 	done
 
 	i=0
 	for dir_name in ${DIR_NAMES[@]}; do
-		DIRS_PATH[$i]=$HOME/"$dir_name"
-		DIRS_BKP_PATH[$((i++))]="$BKP_PATH"/"$dir_name"
+		DIRS_PATH[i]=$HOME/"$dir_name"
+		DIRS_BKP_PATH[i++]="$BKP_PATH"/"$dir_name"
 	done
 
 	cd $HOME
@@ -181,35 +181,35 @@ backup() {
 	i=0
 	for file in ${FILES_PATH[@]}; do
 		if [ -e $file ]; then
-			if [ ! -e ${FILES_BKP_PATH[$i]} ]; then
-				message="Copiando o arquivo \"${FILE_NAMES[$i]}\"..."
+			if [ ! -e ${FILES_BKP_PATH[i]} ]; then
+				message="Copiando o arquivo \"${FILE_NAMES[i]}\"..."
 				display_message 'notification' "$message"
 
 				log 'info' "$message"
 
 				cp -rf $file $BKP_PATH
 			else
-				difference=`diff $file ${FILES_BKP_PATH[$i]}`
+				difference=`diff $file ${FILES_BKP_PATH[i]}`
 				if [ -n "$difference" ]; then
-					message="Atualizando o arquivo \"${FILE_NAMES[$i]}\"..."
+					message="Atualizando o arquivo \"${FILE_NAMES[i]}\"..."
 					display_message 'notification' "$message"
 
 					log 'info' "$message"
 
-					rm -f ${FILES_BKP_PATH[$i]}
+					rm -f ${FILES_BKP_PATH[i]}
 					cp -rf $file $BKP_PATH
 				else
 					((no_update++))
 				fi
 			fi
 		else
-			if [ -e ${FILES_BKP_PATH[$i]} ]; then
-				message="Removendo arquivo \"${FILE_NAMES[$i]}\", inexistente na origem..."
+			if [ -e ${FILES_BKP_PATH[i]} ]; then
+				message="Removendo arquivo \"${FILE_NAMES[i]}\", inexistente na origem..."
 				display_message 'notification' "$message"
 
 				log 'info' "$message"
 
-				rm -f ${FILES_BKP_PATH[$i]}
+				rm -f ${FILES_BKP_PATH[i]}
 			else
 				((no_update++))
 			fi
@@ -227,37 +227,37 @@ backup() {
 		else
 			number_of_items=`ls $dir | wc -l`
 			if [ $number_of_items -gt 0 ]; then
-				if [ ! -e ${DIRS_BKP_PATH[$i]} ]; then
-					message="Copiando o diretório \"${DIR_NAMES[$i]}\"..."
+				if [ ! -e ${DIRS_BKP_PATH[i]} ]; then
+					message="Copiando o diretório \"${DIR_NAMES[i]}\"..."
 					display_message 'notification' "$message"
 
 					log 'info' "$message"
 
-					cp -rf $dir ${DIRS_BKP_PATH[$i]}
+					cp -rf $dir ${DIRS_BKP_PATH[i]}
 				else
-					difference=`diff -r $dir ${DIRS_BKP_PATH[$i]}`
+					difference=`diff -r $dir ${DIRS_BKP_PATH[i]}`
 					if [ -n "$difference" ]; then
-						message="Atualizando o diretório \"${DIR_NAMES[$i]}\"..."
+						message="Atualizando o diretório \"${DIR_NAMES[i]}\"..."
 						display_message 'notification' "$message"
 
 						log 'info' "$message"
 
-						rm -rf ${DIRS_BKP_PATH[$i]}
-						cp -rf $dir ${DIRS_BKP_PATH[$i]}
+						rm -rf ${DIRS_BKP_PATH[i]}
+						cp -rf $dir ${DIRS_BKP_PATH[i]}
 					else
 						((no_update++))
 					fi
 				fi
 			else
-				if [ -e ${DIRS_BKP_PATH[$i]} ]; then
-					number_of_items=`ls ${DIRS_BKP_PATH[$i]} | wc -l`
+				if [ -e ${DIRS_BKP_PATH[i]} ]; then
+					number_of_items=`ls ${DIRS_BKP_PATH[i]} | wc -l`
 					if [ $number_of_items -gt 0 ]; then
-						message="Removendo diretório vazio \"${DIR_NAMES[$i]}\"..."
+						message="Removendo diretório vazio \"${DIR_NAMES[i]}\"..."
 						display_message 'notification' "$message"
 
 						log 'info' "$message"
 
-						rm -rf ${DIRS_BKP_PATH[$i]}
+						rm -rf ${DIRS_BKP_PATH[i]}
 					fi
 				else
 					((no_update++))
@@ -290,7 +290,7 @@ compact() {
 	local readonly COMPACTED_FILE="$DESKTOP_PATH"/"$COMPACTED_FILE_NAME"
 
 	for item in `ls -A "$BKP_PATH" | paste`; do
-		content[$((i++))]="$item"
+		content[i++]="$item"
 	done
 
 	cd "$BKP_PATH"
