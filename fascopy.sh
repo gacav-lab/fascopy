@@ -42,12 +42,12 @@ log() {
 	local readonly ERROR_LOG="$LOG_PATH"/"$ERROR_LOG_NAME"
 
 	if [ $((log_id++)) -eq 0 ]; then
-		echo "Data: `date +\"%x\"`" > "$INFO_LOG"
-		echo "Hora: `date +\"%H h %M min\"`" >> "$INFO_LOG"
+		echo "Date: `date +\"%x\"`" > "$INFO_LOG"
+		echo "Hoour: `date +\"%H h %M min\"`" >> "$INFO_LOG"
 		echo '------------------------------------' >> "$INFO_LOG"
 
-		echo "Data: `date +\"%x\"`" > "$ERROR_LOG"
-		echo "Hora: `date +\"%H h %M min\"`" >> "$ERROR_LOG"
+		echo "Date: `date +\"%x\"`" > "$ERROR_LOG"
+		echo "Hour: `date +\"%H h %M min\"`" >> "$ERROR_LOG"
 		echo '------------------------------------' >> "$ERROR_LOG"
 	fi
 
@@ -65,7 +65,7 @@ checks_needed_programs() {
 	# "Zenity" is the most universal dialog program, it comes pre-installed on ALMOST all distributions
 	# "Zip" is the most universal compression program, it comes pre-installed on ALMOST all distributions
 
-	message='Verificando programas...'
+	message='Verifying programs...'
 	display_message 'notification' "$message"
 
 	local readonly exists
@@ -87,7 +87,7 @@ checks_needed_programs() {
 				if [ $exists -eq $COMMAND_NOT_FOUND ]; then
 					missing_programs='true'
 
-					message="O programa \"${program^}\" é necessário!"
+					message="The \"${program^}\" program is necessary!"
 					echo "$message"
 
 					log 'error' "$message"
@@ -98,7 +98,7 @@ checks_needed_programs() {
 				exit $FAILURE
 			fi
 		else
-			message="Tentativa de execução via GUI com \"Zenity\" inexistente."
+			message="Attempted execution via GUI with non-existent \"Zenity\""
 			log 'error' "$message"
 
 			exit $FAILURE
@@ -113,7 +113,7 @@ checks_needed_programs() {
 			if [ $exists -eq $COMMAND_NOT_FOUND ]; then
 				missing_programs='true'
 
-				message="O programa \"${program^}\" é necessário!"
+				message="The \"${program^}\" program is necessary!"
 				display_message 'error' "$message"
 
 				log 'error' "$message"
@@ -132,7 +132,7 @@ create_dirs() {
 	if [ ! -e "$LOG_PATH" ]; then
 		mkdir -p "$LOG_PATH"
 
-		message="Diretório \""$LOG_DIR_NAME"/"$SCRIPT_NAME"\" criado."
+		message="Directory \""$LOG_DIR_NAME"/"$SCRIPT_NAME"\" created."
 		display_message 'notification' "$message"
 
 		log 'info' "$message"
@@ -141,7 +141,7 @@ create_dirs() {
 	if [ ! -d "$BKP_PATH" ]; then
 		mkdir "$BKP_PATH"
 
-		message="Diretório \""$BKP_DIR_NAME"\" criado."
+		message="Directory \""$BKP_DIR_NAME"\" created."
 		display_message 'notification' "$message"
 
 		log 'info' "$message"
@@ -149,7 +149,7 @@ create_dirs() {
 }
 
 backup() {
-	message='Verificando mudanças...'
+	message='Checking changes...'
 	display_message 'notification' "$message"
 
 	local i
@@ -162,7 +162,7 @@ backup() {
 	local items_total
 	local number_of_items
 	local readonly FILE_NAMES=(.gitconfig)
-	local readonly DIR_NAMES=(.ssh .config Documentos Downloads Imagens Modelos Música laboratory Vídeos Público)
+	local readonly DIR_NAMES=(.ssh .config Documentos Downloads Imagens Modelos Música laboratory Vídeos)
 
 	for file_name in ${FILE_NAMES[@]}; do
 		FILES_PATH[i]=$HOME/"$file_name"
@@ -182,7 +182,7 @@ backup() {
 	for file in ${FILES_PATH[@]}; do
 		if [ -e $file ]; then
 			if [ ! -e ${FILES_BKP_PATH[i]} ]; then
-				message="Copiando o arquivo \"${FILE_NAMES[i]}\"..."
+				message="Copying the file \"${FILE_NAMES[i]}\"..."
 				display_message 'notification' "$message"
 
 				log 'info' "$message"
@@ -191,7 +191,7 @@ backup() {
 			else
 				difference=`diff $file ${FILES_BKP_PATH[i]}`
 				if [ -n "$difference" ]; then
-					message="Atualizando o arquivo \"${FILE_NAMES[i]}\"..."
+					message="Updating the file \"${FILE_NAMES[i]}\"..."
 					display_message 'notification' "$message"
 
 					log 'info' "$message"
@@ -204,7 +204,7 @@ backup() {
 			fi
 		else
 			if [ -e ${FILES_BKP_PATH[i]} ]; then
-				message="Removendo arquivo \"${FILE_NAMES[i]}\", inexistente na origem..."
+				message="Removing \"${FILE_NAMES[i]}\" file that does not exist in source..."
 				display_message 'notification' "$message"
 
 				log 'info' "$message"
@@ -228,7 +228,7 @@ backup() {
 			number_of_items=`ls $dir | wc -l`
 			if [ $number_of_items -gt 0 ]; then
 				if [ ! -e ${DIRS_BKP_PATH[i]} ]; then
-					message="Copiando o diretório \"${DIR_NAMES[i]}\"..."
+					message="Copying the directory \"${DIR_NAMES[i]}\"..."
 					display_message 'notification' "$message"
 
 					log 'info' "$message"
@@ -237,7 +237,7 @@ backup() {
 				else
 					difference=`diff -r $dir ${DIRS_BKP_PATH[i]}`
 					if [ -n "$difference" ]; then
-						message="Atualizando o diretório \"${DIR_NAMES[i]}\"..."
+						message="Updating the directory \"${DIR_NAMES[i]}\"..."
 						display_message 'notification' "$message"
 
 						log 'info' "$message"
@@ -252,7 +252,7 @@ backup() {
 				if [ -e ${DIRS_BKP_PATH[i]} ]; then
 					number_of_items=`ls ${DIRS_BKP_PATH[i]} | wc -l`
 					if [ $number_of_items -gt 0 ]; then
-						message="Removendo diretório vazio \"${DIR_NAMES[i]}\"..."
+						message="Removing empty directory \"${DIR_NAMES[i]}\"..."
 						display_message 'notification' "$message"
 
 						log 'info' "$message"
@@ -270,7 +270,7 @@ backup() {
 
 	# If there are no updates, exit the program, not updating the log and the like
 	if [ $no_update -eq $items_total ]; then
-		message='Nenhuma mudança!'
+		message='No changes!'
 		display_message 'info' "$message"
 
 		exit $SUCCESS
@@ -278,7 +278,7 @@ backup() {
 }
 
 compact() {
-	message='Compactando...'
+	message='Compressing...'
 	display_message 'notification' "$message"
 
 	local i
@@ -316,5 +316,5 @@ checks_needed_programs
 create_dirs
 backup
 compact
-message='Backup concluído!'
+message='Finished backup!'
 display_message 'info' "$message"
