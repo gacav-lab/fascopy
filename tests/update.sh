@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-echo '@' >> ~/laboratory/temporario/trash.txt
+echo '@' >> ~/laboratory/temporary/trash.txt
