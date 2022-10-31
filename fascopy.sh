@@ -12,7 +12,7 @@ readonly LOG_PATH="$DESKTOP_PATH"/"$LOG_DIR_NAME"/"$SCRIPT_NAME"
 check_ui() {
 	# Graphic User Interface - GUI
 	# Command Line Interface - CLI
-	[[ $TERM != 'dumb' ]] && echo 'cli' || echo 'gui'
+	[ $TERM != 'dumb' ] && echo 'cli' || echo 'gui'
 }
 
 display_message() {
