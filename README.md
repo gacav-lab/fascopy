@@ -39,3 +39,9 @@ renomeá-los.
 Command Line Interface
 
 ![Captura de tela_2022-10-31_11-25-37](https://user-images.githubusercontent.com/94535032/199032072-cbb2218e-be6a-4ff1-bab2-cf4e1cd61ec6.png)
+
+Graphic User Interface
+
+![Captura de tela_2022-10-31_11-41-11](https://user-images.githubusercontent.com/94535032/199035663-34c3f47e-9b00-4b45-be0f-f42529aefb98.png)
+
+![Captura de tela_2022-10-31_11-41-30](https://user-images.githubusercontent.com/94535032/199035838-31a9ab51-e53d-4f82-8007-96a544166555.png)
