@@ -1,4 +1,4 @@
-# Fascopy - FASt COPY - Cópia rápida
+# Fascopy - [Fas]t [Copy] - Cópia rápida
 
 ## Informações
 
