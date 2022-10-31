@@ -34,10 +34,9 @@ camel-case (barFoo) não são recomendados;
 Obs.: As regras acima não se aplicam a diretórios ou arquivos nativos, pois eles já vêm com o sistema e não faz sentido, nem se deve
 renomeá-los.
 
-## Demonstração
+## Demonstrações
 
 Command Line Interface
-<img src=https://github.com/gacav-lab/fascopy/blob/main/issues/demonstrations/cli-demonstration.png>
 
 ![Captura de tela_2022-10-31_11-25-37](https://user-images.githubusercontent.com/94535032/199032072-cbb2218e-be6a-4ff1-bab2-cf4e1cd61ec6.png)
 
