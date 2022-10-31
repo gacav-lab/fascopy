@@ -31,5 +31,5 @@ camel-case (barFoo) não são recomendados;
 
 3. Evite caracteres em maiúsculo, o ideal é que todos eles sejam escritos em minúsculo;
 
-Obs.: As regras acima não se aplicam a diretórios ou arquivos nativos, pois eles já vem com o sistema e não faz sentido, nem se deve
+Obs.: As regras acima não se aplicam a diretórios ou arquivos nativos, pois eles já vm com o sistema e não faz sentido, nem se deve
 renomeá-los.
