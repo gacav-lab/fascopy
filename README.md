@@ -22,7 +22,7 @@ Realiza uma backup (cópia de segurança) de todos os diretórios e/ou arquivos 
 
 Foi utilizada a linguagem de script supracitada para criação do script, que tem como objetivo automatizar a realização de backup, anteriormente feita manualmente. O backup pode ser realizado através de duplo-clique sobre o script ou via linha de comando (console ou terminal), se preferir, que será feito de forma rápida, automática e eficiente. Ele executa em segundo plano, identificando o ambiente em que está sendo executado (CLI - Interface de Linha de Comando ou GUI - Interface Gráfica do Usuário) e dando respostas de acordo, sobre em qual etapa do processo está, quando o processo é concluído e caso encontre algum erro. Fascopy gera arquivos de log contendo informações sobre seu processamento e/ou erros encontrados. Dentro do código, foram feitas várias modificações para torná-lo mais eficiente.
 
-## Boas práticas para nomeação de diretórios ou arquivos
+## Boas práticas para nomeação de diretórios e arquivos
 
 1. Evite espaços entre nomes compostos, use técnicas como: hífen (bar-foo), none (barfoo) ou snake-case (bar_foo); pascal-case (BarFoo) e
 camel-case (barFoo) não são recomendados;
