@@ -26,9 +26,7 @@ display_message() {
 			'info')
 				zenity --title="$TITLE" --info --text="$2" &;;
 			'error')
-				zenity --title="$TITLE" --error --text="$2" &;;
-			*)
-				exit $FAILURE
+				zenity --title="$TITLE" --error --text="$2" &
 		esac
 	fi
 }
