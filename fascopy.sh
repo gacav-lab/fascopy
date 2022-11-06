@@ -2,14 +2,11 @@
 
 readonly FAILURE=1
 readonly SUCCESS=0
-readonly LOG_DIR_NAME='.logs'
 readonly SCRIPT_NAME='fascopy'
 readonly BKP_PATH=$HOME/.backup
 readonly DESKTOP_PATH=$HOME/Área\ de\ Trabalho
 
 check_ui() {
-	# Graphic User Interface - GUI
-	# Command Line Interface - CLI
 	[ $TERM != 'dumb' ] && echo 'cli' || echo 'gui'
 }
 
@@ -17,24 +14,22 @@ display_message() {
 	local readonly TIME=3
 	local readonly TITLE=${SCRIPT_NAME^}
 
-	if [ $ui = 'cli' ]; then
-		echo $2
-	else
-		case $1 in
-			'notification')
-				zenity --notification --text="$2" --timeout=$TIME &;;
-			'info')
-				zenity --title="$TITLE" --info --text="$2" &;;
-			'error')
-				zenity --title="$TITLE" --error --text="$2" &
-		esac
-	fi
+	case $ui in
+		'cli')
+			echo $2;;
+		'gui')
+			case $1 in
+				'notification')
+					zenity --notification --text="$2" --timeout=$TIME &;;
+				'info')
+					zenity --title="$TITLE" --info --text="$2" &;;
+				'error')
+					zenity --title="$TITLE" --error --text="$2" &
+			esac
+	esac
 }
 
 checks_needed_programs() {
-	# "Zenity" is the most universal dialog program, it comes pre-installed on ALMOST all distributions
-	# "Zip" is the most universal compression program, it comes pre-installed on ALMOST all distributions
-
 	message='Verifying programs...'
 	display_message 'notification' "$message"
 
@@ -90,11 +85,10 @@ checks_needed_programs() {
 }
 
 create_dirs() {
-	local readonly BKP_DIR_NAME='.backup'
-
 	local i
-	local readonly NAMES=($BKP_DIR_NAME)
 	local readonly DIRS=("$BKP_PATH")
+	local readonly NAMES=($BKP_DIR_NAME)
+	local readonly BKP_DIR_NAME='.backup'
 
 	for dir in ${DIRS[@]}; do
 		if [ ! -e $dir ]; then
@@ -230,8 +224,6 @@ compact() {
 	local i
 	local item
 	local content
-#	local readonly TEMP_DIR_NAME='.temp'
-#	local readonly TEMP_DIR=$HOME/"$TEMP_DIR_NAME"
 	local readonly COMPACTED_FILE_NAME='backup.zip'
 	local readonly COMPACTED_FILE="$DESKTOP_PATH"/"$COMPACTED_FILE_NAME"
 
@@ -240,18 +232,6 @@ compact() {
 	done
 
 	cd "$BKP_PATH"
-
-	# More performant compression, but bugged
-#	if [ -e "$COMPACTED_FILE" ]; then
-#		mkdir "$TEMP_DIR"
-#		mv "$COMPACTED_FILE" "$TEMP_DIR"
-#		zip -urq9 "$TEMP_DIR"/"$COMPACTED_FILE_NAME" "${content[@]}"
-#		mv "$TEMP_DIR"/"$COMPACTED_FILE_NAME" "$DESKTOP_PATH"
-#		rmdir "$TEMP_DIR"
-#	else
-#		zip -rq9 "$COMPACTED_FILE_NAME" "${content[@]}"
-#		mv "$COMPACTED_FILE_NAME" "$DESKTOP_PATH"
-#	fi
 
 	zip -rq9 "$COMPACTED_FILE_NAME" "${content[@]}"
 	mv "$COMPACTED_FILE_NAME" "$DESKTOP_PATH"
