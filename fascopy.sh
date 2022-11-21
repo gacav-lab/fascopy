@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 readonly FAILURE=1
-readonly SUCCESS=0
 readonly SCRIPT_NAME='fascopy'
-readonly BKP_PATH=$HOME/.backup
+readonly BKP_DIR_NAME='.backup'
+readonly BKP_PATH=$HOME/"$BKP_DIR_NAME"
 readonly DESKTOP_PATH=$HOME/Área\ de\ Trabalho
 
 check_ui() {
@@ -33,12 +33,12 @@ checks_needed_programs() {
 	message='Verifying programs...'
 	display_message 'notification' "$message"
 
-	local readonly exists
-	local readonly program
+	local exists
+	local program
 	local readonly zenity_exists
 	local readonly PROGRAMS=(zip)
+	local missing_programs='false'
 	local readonly COMMAND_NOT_FOUND=127
-	local readonly missing_programs='false'
 
 	zenity --version > /dev/null 2> /dev/null
 	zenity_exists=$?
@@ -86,9 +86,8 @@ checks_needed_programs() {
 
 create_dirs() {
 	local i
-	local readonly DIRS=("$BKP_PATH")
 	local readonly NAMES=($BKP_DIR_NAME)
-	local readonly BKP_DIR_NAME='.backup'
+	local readonly DIRS=("$BKP_PATH")
 
 	for dir in ${DIRS[@]}; do
 		if [ ! -e $dir ]; then
@@ -98,6 +97,14 @@ create_dirs() {
 			display_message 'notification' "$message"
 		fi
 	done
+}
+
+protected() {
+	chmod a-w "$1"
+}
+
+unprotected() {
+	chmod ug+w "$1"
 }
 
 backup() {
@@ -128,6 +135,8 @@ backup() {
 	done
 
 	cd $HOME
+
+	unprotected "$BKP_PATH"
 
 	# File backup
 	i=0
@@ -208,39 +217,20 @@ backup() {
 		let i++ items_total++
 	done
 
+	protected "$BKP_PATH"
+
 	# If there are no updates, exit the program, not updating the log and the like
 	if [ $no_update -eq $items_total ]; then
 		message='No changes!'
 		display_message 'info' "$message"
 
-		exit $SUCCESS
+		exit
 	fi
-}
-
-compact() {
-	message='Compressing...'
-	display_message 'notification' "$message"
-
-	local i
-	local item
-	local content
-	local readonly COMPACTED_FILE_NAME='backup.zip'
-	local readonly COMPACTED_FILE="$DESKTOP_PATH"/"$COMPACTED_FILE_NAME"
-
-	for item in `ls -A "$BKP_PATH" | paste`; do
-		content[i++]="$item"
-	done
-
-	cd "$BKP_PATH"
-
-	zip -rq9 "$COMPACTED_FILE_NAME" "${content[@]}"
-	mv "$COMPACTED_FILE_NAME" "$DESKTOP_PATH"
 }
 
 ui=`check_ui`
 checks_needed_programs
 create_dirs
 backup
-compact
 message='Finished backup!'
 display_message 'info' "$message"
