@@ -1,12 +1,9 @@
 #!/usr/bin/env bash
 
 readonly BACKUP="$HOME"/.backup
-readonly LOGS="$HOME"/Área\ de\ Trabalho/.logs
 
 if [ -e "$BACKUP" ]; then
-	rm -rf "$BACKUP"
-fi
+	chmod ug+w "$BACKUP"
 
-if [ -e "$LOGS" ]; then
-	rm -rf "$LOGS"
+	rm -rf "$BACKUP"
 fi
