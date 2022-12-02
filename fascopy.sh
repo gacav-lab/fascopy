@@ -219,7 +219,6 @@ backup() {
 
 	protected "$BKP_PATH"
 
-	# If there are no updates, exit the program, not updating the log and the like
 	if [ $no_update -eq $items_total ]; then
 		message='No changes!'
 		display_message 'info' "$message"
